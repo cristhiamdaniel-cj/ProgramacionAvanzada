@@ -276,3 +276,180 @@ int main() {
     return 0;
 }
 ```
+
+## 3. Ejemplos: Búsqueda y Ordenación
+
+### 3.1 Algoritmos de Búsqueda
+
+#### 3.1.1 Búsqueda Lineal y Binaria
+
+**Búsqueda Lineal:**
+- Definición: La búsqueda lineal recorre secuencialmente los elementos de una colección hasta encontrar el elemento deseado.
+- Aplicación práctica: Buscar un elemento específico en un arreglo no ordenado.
+
+```cpp
+#include <iostream>
+
+bool busquedaLineal(const int arreglo[], int n, int objetivo) {
+    for (int i = 0; i < n; ++i) {
+        if (arreglo[i] == objetivo) {
+            return true;  // Elemento encontrado
+        }
+    }
+    return false;  // Elemento no encontrado
+}
+
+int main() {
+    const int n = 5;
+    int arreglo[] = {2, 4, 7, 1, 9};
+    int objetivo = 7;
+
+    if (busquedaLineal(arreglo, n, objetivo)) {
+        std::cout << "Elemento encontrado." << std::endl;
+    } else {
+        std::cout << "Elemento no encontrado." << std::endl;
+    }
+
+    return 0;
+}
+```
+
+**Búsqueda Binaria:**
+- Definición: La búsqueda binaria funciona en arreglos ordenados, dividiendo el espacio de búsqueda por la mitad en cada iteración.
+- Aplicación práctica: Buscar un elemento específico en un arreglo ordenado.
+
+```cpp
+#include <iostream>
+
+bool busquedaBinaria(const int arreglo[], int inicio, int fin, int objetivo) {
+    while (inicio <= fin) {
+        int medio = inicio + (fin - inicio) / 2;
+
+        if (arreglo[medio] == objetivo) {
+            return true;  // Elemento encontrado
+        }
+
+        if (arreglo[medio] < objetivo) {
+            inicio = medio + 1;
+        } else {
+            fin = medio - 1;
+        }
+    }
+    return false;  // Elemento no encontrado
+}
+
+int main() {
+    const int n = 5;
+    int arreglo[] = {1, 2, 4, 7, 9};
+    int objetivo = 7;
+
+    if (busquedaBinaria(arreglo, 0, n - 1, objetivo)) {
+        std::cout << "Elemento encontrado." << std::endl;
+    } else {
+        std::cout << "Elemento no encontrado." << std::endl;
+    }
+
+    return 0;
+}
+```
+
+### 3.2 Algoritmos de Ordenación
+
+#### 3.2.1 Bubble Sort
+
+**Bubble Sort:**
+- Definición: Bubble Sort compara y swapea elementos adyacentes hasta que la colección esté ordenada.
+- Comparación de rendimiento: No es eficiente para grandes conjuntos de datos.
+- Eficiencia: O(n^2) en el peor caso.
+
+```cpp
+#include <iostream>
+
+void bubbleSort(int arreglo[], int n) {
+    for (int i = 0; i < n - 1; ++i) {
+        for (int j = 0; j < n - i - 1; ++j) {
+            if (arreglo[j] > arreglo[j + 1]) {
+                // Swap de elementos
+                int temp = arreglo[j];
+                arreglo[j] = arreglo[j + 1];
+                arreglo[j + 1] = temp;
+            }
+        }
+    }
+}
+
+int main() {
+    const int n = 5;
+    int arreglo[] = {4, 2, 7, 1, 9};
+
+    // Aplicar Bubble Sort al arreglo
+    bubbleSort(arreglo, n);
+
+    // Imprimir arreglo ordenado
+    std::cout << "Arreglo ordenado: ";
+    for (int i = 0; i < n; ++i) {
+        std::cout << arreglo[i] << " ";
+    }
+    std::cout << std::endl;
+
+    return 0;
+}
+```
+
+#### 3.2.2 QuickSort
+
+**QuickSort:**
+- Definición: QuickSort utiliza un elemento pivote para dividir la colección en subconjuntos y luego aplica recursivamente el algoritmo.
+- Comparación de rendimiento: Eficiente para grandes conjuntos de datos.
+- Eficiencia: O(n log n) en el caso promedio.
+
+```cpp
+#include <iostream>
+
+void intercambiar(int& a, int& b) {
+    int temp = a;
+    a = b;
+    b = temp;
+}
+
+int particionar(int arreglo[], int bajo, int alto) {
+    int pivote = arreglo[alto];
+    int i = bajo - 1;
+
+    for (int j = bajo; j < alto; ++j) {
+        if (arreglo[j] <= pivote) {
+            ++i;
+            intercambiar(arreglo[i], arreglo[j]);
+        }
+    }
+
+    intercambiar(arreglo[i + 1], arreglo[alto]);
+    return i + 1;
+}
+
+void quickSort(int arreglo[], int bajo, int alto) {
+    if (bajo < alto) {
+        int indicePivote = particionar(arreglo, bajo, alto);
+
+        quickSort(arreglo, bajo, indicePivote - 1);
+        quickSort(arreglo, indicePivote + 1, alto);
+    }
+}
+
+int main() {
+    const int n = 5;
+    int arreglo[] = {4, 2, 7, 1, 9};
+
+    // Aplicar QuickSort al arreglo
+    quickSort(arreglo, 0, n - 1);
+
+    // Imprimir arreglo ordenado
+    std::cout << "Arreglo ordenado: ";
+    for (int i = 0; i < n; ++i) {
+        std::cout << arreglo[i] << " ";
+    }
+    std::cout << std::endl;
+
+    return 0;
+}
+```
