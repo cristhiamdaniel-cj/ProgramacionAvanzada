@@ -1,5 +1,32 @@
 // main.js
 
+const arraySize = 10; // Tamaño de la lista
+
+// Función para generar una lista de números enteros aleatorios
+function generateRandomArray(size) {
+    const array = [];
+    for (let i = 0; i < size; i++) {
+        array.push(Math.floor(Math.random() * 100) + 1); // Números entre 1 y 100
+    }
+    return array;
+}
+
+// Inicializar la lista aleatoria
+const originalArray = generateRandomArray(arraySize);
+
+// Función para reiniciar la lista original
+function resetArray() {
+    return [...originalArray];
+}
+
+// Función para obtener un elemento aleatorio de la lista
+function getRandomElement(array) {
+    const randomIndex = Math.floor(Math.random() * array.length);
+    return array[randomIndex];
+}
+
+// Resto del código...
+
 function drawArray(array, color) {
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
@@ -112,21 +139,24 @@ function visualize() {
     const algorithmSelect = document.getElementById("algorithmSelect");
     const selectedAlgorithm = algorithmSelect.value;
 
-    const array = [4, 2, 7, 1, 9];
+    let array;
+
+    // Resetear la lista original antes de cada visualización
+    array = resetArray();
 
     switch (selectedAlgorithm) {
         case "linearSearch":
-            linearSearch([...array], 7);
+            linearSearch(array, getRandomElement(array));
             break;
         case "binarySearch":
             array.sort((a, b) => a - b);
-            binarySearch([...array], 7);
+            binarySearch(array, getRandomElement(array));
             break;
         case "bubbleSort":
-            bubbleSort([...array]);
+            bubbleSort(array);
             break;
         case "quickSort":
-            quickSort([...array], 0, array.length - 1);
+            quickSort(array, 0, array.length - 1);
             break;
         default:
             break;
