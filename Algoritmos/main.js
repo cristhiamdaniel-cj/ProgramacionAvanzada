@@ -25,52 +25,42 @@ function getRandomElement(array) {
     return array[randomIndex];
 }
 
-function drawArray(array, color) {
-    const canvas = document.getElementById("canvas");
-    const ctx = canvas.getContext("2d");
-    const barWidth = canvas.width / array.length;
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    array.forEach((value, index) => {
-        ctx.fillStyle = color;
-        ctx.fillRect(index * barWidth, canvas.height - value, barWidth - 1, value);
-    });
-}
-
+// Función para mostrar el estado actual del arreglo en el área designada
 function drawArrayDisplay(array) {
     const arrayDisplay = document.getElementById("array");
-    arrayDisplay.innerHTML = array.map(value => `<span>${value}</span>`).join(", ");
+    arrayDisplay.innerHTML = array.map(value => `<span>${value}</span>`).join(" ");
 }
 
+// Función para pausar la ejecución por un tiempo determinado
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// Función de búsqueda lineal
 async function linearSearch(array, target) {
     for (let i = 0; i < array.length; ++i) {
-        drawArray(array, "lightblue");
-        drawArray([array[i]], "red");
+        array[i] === target ? array[i] = `(${target})` : array[i] = `${array[i]}`;
         drawArrayDisplay(array);
         await sleep(500);
         if (array[i] === target) {
-            drawArray(array, "green");
             return true;
         }
     }
-    drawArray(array, "red");
     return false;
 }
 
+// Función de búsqueda binaria
 async function binarySearch(array, target) {
     let low = 0;
     let high = array.length - 1;
 
     while (low <= high) {
         const mid = Math.floor((low + high) / 2);
-        drawArray(array, "lightblue");
-        drawArray([array[mid]], "red");
+        array[mid] === target ? array[mid] = `(${target})` : array[mid] = `${array[mid]}`;
         drawArrayDisplay(array);
         await sleep(500);
 
         if (array[mid] === target) {
-            drawArray(array, "green");
             return true;
         }
 
@@ -81,29 +71,21 @@ async function binarySearch(array, target) {
         }
     }
 
-    drawArray(array, "red");
     return false;
 }
 
+// Función de ordenamiento: Bubble Sort
 async function bubbleSort(array) {
     for (let i = 0; i < array.length - 1; ++i) {
         for (let j = 0; j < array.length - i - 1; ++j) {
-            drawArray(array, "lightblue");
-            drawArray([array[j], array[j + 1]], "red");
+            array[j] > array[j + 1] ? [array[j], array[j + 1]] = [array[j + 1], array[j]] : null;
             drawArrayDisplay(array);
             await sleep(500);
-
-            if (array[j] > array[j + 1]) {
-                const temp = array[j];
-                array[j] = array[j + 1];
-                array[j + 1] = temp;
-            }
         }
     }
-
-    drawArray(array, "green");
 }
 
+// Función de ordenamiento: QuickSort
 async function quickSort(array, low, high) {
     if (low < high) {
         const pivotIndex = await partition(array, low, high);
@@ -112,32 +94,29 @@ async function quickSort(array, low, high) {
     }
 }
 
+// Función auxiliar para QuickSort: Partición
 async function partition(array, low, high) {
     const pivot = array[high];
     let i = low - 1;
 
     for (let j = low; j <= high - 1; ++j) {
-        drawArray(array, "lightblue");
-        drawArray([array[j], pivot], "red");
+        array[j] > pivot ? [array[j], array[i + 1]] = [array[i + 1], array[j]] : null;
         drawArrayDisplay(array);
         await sleep(500);
 
         if (array[j] < pivot) {
             i++;
-            const temp = array[i];
-            array[i] = array[j];
-            array[j] = temp;
         }
     }
 
-    const temp = array[i + 1];
-    array[i + 1] = array[high];
-    array[high] = temp;
+    [array[i + 1], array[high]] = [array[high], array[i + 1]];
+    drawArrayDisplay(array);
+    await sleep(500);
 
-    drawArray(array, "green");
     return i + 1;
 }
 
+// Función principal para visualizar algoritmos
 function visualize() {
     const algorithmSelect = document.getElementById("algorithmSelect");
     const selectedAlgorithm = algorithmSelect.value;
@@ -148,7 +127,6 @@ function visualize() {
     array = resetArray();
 
     // Visualización inicial del arreglo
-    drawArray(array, "lightblue");
     drawArrayDisplay(array);
 
     switch (selectedAlgorithm) {
