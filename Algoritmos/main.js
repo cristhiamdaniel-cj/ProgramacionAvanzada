@@ -116,34 +116,72 @@ async function partition(array, low, high) {
     return i + 1;
 }
 
-// Función principal para visualizar algoritmos
-function visualize() {
-    const algorithmSelect = document.getElementById("algorithmSelect");
-    const selectedAlgorithm = algorithmSelect.value;
+let currentStep = 0;
+let arraySteps = [];
+
+function updateControls() {
+    const startButton = document.querySelector("#controls button:nth-of-type(1)");
+    const backButton = document.querySelector("#controls button:nth-of-type(2)");
+    const forwardButton = document.querySelector("#controls button:nth-of-type(3)");
+    const endButton = document.querySelector("#controls button:nth-of-type(4)");
+
+    startButton.disabled = currentStep === 0;
+    backButton.disabled = currentStep === 0;
+    forwardButton.disabled = currentStep === arraySteps.length - 1;
+    endButton.disabled = currentStep === arraySteps.length - 1;
+}
+
+function resetSteps() {
+    currentStep = 0;
+    arraySteps = [];
+    updateControls();
+}
+
+async function startVisualization() {
+    resetSteps();
+    const selectedAlgorithm = document.getElementById("algorithmSelect").value;
 
     let array;
-
-    // Resetear la lista original antes de cada visualización
     array = resetArray();
-
-    // Visualización inicial del arreglo
-    drawArrayDisplay(array);
+    arraySteps.push([...array]);
 
     switch (selectedAlgorithm) {
         case "linearSearch":
-            linearSearch(array, getRandomElement(array));
+            await linearSearch(array, getRandomElement(array));
             break;
         case "binarySearch":
             array.sort((a, b) => a - b);
-            binarySearch(array, getRandomElement(array));
+            await binarySearch(array, getRandomElement(array));
             break;
         case "bubbleSort":
-            bubbleSort(array);
+            await bubbleSort(array);
             break;
         case "quickSort":
-            quickSort(array, 0, array.length - 1);
+            await quickSort(array, 0, array.length - 1);
             break;
         default:
             break;
     }
+}
+
+function stepBack() {
+    if (currentStep > 0) {
+        currentStep--;
+        drawArrayDisplay(arraySteps[currentStep]);
+        updateControls();
+    }
+}
+
+function stepForward() {
+    if (currentStep < arraySteps.length - 1) {
+        currentStep++;
+        drawArrayDisplay(arraySteps[currentStep]);
+        updateControls();
+    }
+}
+
+function endVisualization() {
+    currentStep = arraySteps.length - 1;
+    drawArrayDisplay(arraySteps[currentStep]);
+    updateControls();
 }

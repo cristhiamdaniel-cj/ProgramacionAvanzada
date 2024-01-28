@@ -14,8 +14,8 @@
             <h2>Visualizador</h2>
             <div id="array"></div>
         </div>
-        <div>
-            <h2>Algoritmos</h2>
+        <div id="controls">
+            <h2>Controles</h2>
             <label for="algorithmSelect">Seleccione un algoritmo:</label>
             <select id="algorithmSelect">
                 <option value="linearSearch">Búsqueda Lineal</option>
@@ -23,7 +23,10 @@
                 <option value="bubbleSort">Bubble Sort</option>
                 <option value="quickSort">QuickSort</option>
             </select>
-            <button onclick="visualize()">Visualizar</button>
+            <button onclick="startVisualization()">Inicio</button>
+            <button onclick="stepBack()">Atrás</button>
+            <button onclick="stepForward()">Adelante</button>
+            <button onclick="endVisualization()">Fin</button>
         </div>
     </div>
 
