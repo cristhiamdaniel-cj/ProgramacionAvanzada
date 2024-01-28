@@ -162,3 +162,117 @@ int main() {
 
 ```
 Este código se centra específicamente en los puntos mencionados sobre vectores (arreglos). La regresión lineal se realiza utilizando vectores `X` e `y`, y el vector de constantes `coeficientes` se utiliza en cálculos y operaciones. Además, se muestra la gestión de la longitud del vector y se imprime el loss durante el entrenamiento.
+
+Entendido, estamos evitando el uso de las librerías `<vector>` y `<array>`. Vamos a continuar generando contenido para los subtemas utilizando únicamente arreglos en C++.
+
+## 2. Paso de Vectores a Funciones
+
+### 2.1 Vectores de Constantes
+
+**Pasando vectores como argumentos:**
+En C++, los arreglos pueden ser pasados a funciones como argumentos de manera similar a otros tipos de datos. Al utilizar referencias, se evita copiar el contenido completo del vector, lo que mejora la eficiencia.
+
+```cpp
+#include <iostream>
+
+void funcionConArreglo(const int miArreglo[], int tamaño) {
+    // Acceder a elementos del arreglo
+    for (int i = 0; i < tamaño; ++i) {
+        std::cout << miArreglo[i] << " ";
+    }
+    std::cout << std::endl;
+}
+
+int main() {
+    int arregloPrincipal[] = {1, 2, 3, 4, 5};
+    int tamañoArreglo = sizeof(arregloPrincipal) / sizeof(arregloPrincipal[0]);
+    
+    funcionConArreglo(arregloPrincipal, tamañoArreglo);
+
+    return 0;
+}
+```
+
+**Modificación y retorno de arreglos:**
+Una función puede modificar los elementos de un arreglo y, opcionalmente, devolver un nuevo arreglo modificado. Aquí se muestra un ejemplo donde se duplican los elementos del arreglo.
+
+```cpp
+#include <iostream>
+
+void duplicarArreglo(const int arregloOriginal[], int tamaño, int arregloDuplicado[]) {
+    for (int i = 0; i < tamaño; ++i) {
+        arregloDuplicado[i] = arregloOriginal[i] * 2;
+    }
+}
+
+int main() {
+    int arregloPrincipal[] = {1, 2, 3, 4, 5};
+    int tamañoArreglo = sizeof(arregloPrincipal) / sizeof(arregloPrincipal[0]);
+    int arregloDuplicado[tamañoArreglo];
+
+    duplicarArreglo(arregloPrincipal, tamañoArreglo, arregloDuplicado);
+
+    // Mostrar el arreglo duplicado
+    for (int i = 0; i < tamañoArreglo; ++i) {
+        std::cout << arregloDuplicado[i] << " ";
+    }
+    std::cout << std::endl;
+
+    return 0;
+}
+```
+
+### 2.2 Tamaño Delimitado por Centinela
+
+**Uso de centinela para gestionar el tamaño:**
+Al igual que con vectores, un centinela puede utilizarse para gestionar dinámicamente el tamaño de un arreglo.
+
+```cpp
+#include <iostream>
+
+void imprimirArregloConCentinela(const int miArreglo[]) {
+    for (int i = 0; miArreglo[i] != -1; ++i) {
+        std::cout << miArreglo[i] << " ";
+    }
+    std::cout << std::endl;
+}
+
+int main() {
+    int arregloConCentinela[] = {1, 2, 3, 4, 5, -1};  // -1 indica el final
+    imprimirArregloConCentinela(arregloConCentinela);
+
+    return 0;
+}
+```
+
+**Evitando desbordamientos y errores:**
+Para evitar desbordamientos y errores al gestionar dinámicamente el tamaño de un arreglo, es crucial garantizar que el centinela no sea confundido con un valor de datos real.
+
+```cpp
+#include <iostream>
+
+void agregarConCentinela(int miArreglo[], int nuevoElemento) {
+    const int centinela = -1;
+
+    for (int i = 0; miArreglo[i] != centinela; ++i) {
+        // Buscar el centinela para gestionar el tamaño
+    }
+
+    // Agregar nuevo elemento y volver a colocar el centinela
+    miArreglo[0] = nuevoElemento;
+    miArreglo[1] = centinela;
+}
+
+int main() {
+    int arregloConCentinela[] = {1, 2, 3, 4, 5, -1};
+    agregarConCentinela(arregloConCentinela, 6);
+
+    // Mostrar el arreglo actualizado
+    for (int i = 0; arregloConCentinela[i] != -1; ++i) {
+        std::cout << arregloConCentinela[i] << " ";
+    }
+    std::cout << std::endl;
+
+    return 0;
+}
+```
