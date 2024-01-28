@@ -25,8 +25,6 @@ function getRandomElement(array) {
     return array[randomIndex];
 }
 
-// Resto del código...
-
 function drawArray(array, color) {
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
@@ -40,14 +38,16 @@ function drawArray(array, color) {
     });
 }
 
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+function drawArrayDisplay(array) {
+    const arrayDisplay = document.getElementById("array");
+    arrayDisplay.innerHTML = array.map(value => `<span>${value}</span>`).join(", ");
 }
 
 async function linearSearch(array, target) {
     for (let i = 0; i < array.length; ++i) {
         drawArray(array, "lightblue");
         drawArray([array[i]], "red");
+        drawArrayDisplay(array);
         await sleep(500);
         if (array[i] === target) {
             drawArray(array, "green");
@@ -66,6 +66,7 @@ async function binarySearch(array, target) {
         const mid = Math.floor((low + high) / 2);
         drawArray(array, "lightblue");
         drawArray([array[mid]], "red");
+        drawArrayDisplay(array);
         await sleep(500);
 
         if (array[mid] === target) {
@@ -89,6 +90,7 @@ async function bubbleSort(array) {
         for (let j = 0; j < array.length - i - 1; ++j) {
             drawArray(array, "lightblue");
             drawArray([array[j], array[j + 1]], "red");
+            drawArrayDisplay(array);
             await sleep(500);
 
             if (array[j] > array[j + 1]) {
@@ -117,6 +119,7 @@ async function partition(array, low, high) {
     for (let j = low; j <= high - 1; ++j) {
         drawArray(array, "lightblue");
         drawArray([array[j], pivot], "red");
+        drawArrayDisplay(array);
         await sleep(500);
 
         if (array[j] < pivot) {
@@ -143,6 +146,10 @@ function visualize() {
 
     // Resetear la lista original antes de cada visualización
     array = resetArray();
+
+    // Visualización inicial del arreglo
+    drawArray(array, "lightblue");
+    drawArrayDisplay(array);
 
     switch (selectedAlgorithm) {
         case "linearSearch":
