@@ -453,3 +453,80 @@ int main() {
     return 0;
 }
 ```
+## Cadena de Caracteres
+
+### 4.1 Paso de Cadenas a Funciones
+
+#### Tratamiento de strings como vectores
+
+En el contexto de programación, las cadenas de caracteres son tratadas como vectores, permitiendo realizar operaciones similares a las de los vectores tradicionales. Este enfoque posibilita el acceso y manipulación de caracteres individuales en la cadena, abriendo la puerta a diversas operaciones como búsqueda, sustitución y procesamiento específico de datos en la cadena.
+
+##### Ejemplo en C++:
+
+```cpp
+#include <iostream>
+
+// Función que recibe una cadena como argumento e imprime cada carácter
+void printString(const char* str) {
+    for (int i = 0; str[i] != '\0'; ++i) {
+        std::cout << str[i] << " ";
+    }
+    std::cout << std::endl;
+}
+
+int main() {
+    const char* message = "Hola, mundo!";
+    
+    // Llamada a la función con una cadena como argumento
+    printString(message);
+
+    return 0;
+}
+```
+
+#### Manipulación y procesamiento de cadenas
+
+Al tratar las cadenas como vectores, se pueden realizar operaciones de manipulación como la inversión de la cadena, la búsqueda y reemplazo de subcadenas, así como la extracción de información específica. Esta capacidad de procesamiento facilita el desarrollo de algoritmos eficientes para tareas relacionadas con el manejo de texto.
+
+### 4.2 E/S de Cadenas
+
+#### Entrada y salida de cadenas
+
+La entrada y salida (E/S) de cadenas es esencial en programas que involucran procesamiento de texto. La capacidad de recibir y mostrar información mediante cadenas de caracteres permite la interacción con el usuario y la lectura de datos desde diversas fuentes, ampliando las posibilidades de aplicación de programas que manipulan texto.
+
+##### Ejemplo en C++:
+
+```cpp
+#include <iostream>
+
+int main() {
+    // Entrada de una cadena desde el usuario
+    char inputString[50];
+    std::cout << "Ingrese una cadena: ";
+    std::cin >> inputString;
+
+    // ... (resto del código)
+
+    return 0;
+}
+```
+
+#### Formateo y presentación de datos
+
+El formateo de cadenas es crucial para presentar datos de manera legible y estéticamente agradable. Esta práctica implica controlar la apariencia visual de la salida, utilizando técnicas como el ajuste de anchos y la alineación. El formateo cuidadoso mejora la presentación de la información, haciéndola más comprensible para el usuario.
+
+##### Ejemplo en C++:
+
+```cpp
+#include <iostream>
+#include <iomanip>
+
+int main() {
+    // ... (resto del código)
+
+    // Salida formateada de una cadena
+    std::cout << "Cadena ingresada: " << std::setw(20) << std::setfill('-') << inputString << std::endl;
+
+    return 0;
+}
+```
