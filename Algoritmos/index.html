@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualización de Algoritmos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="container">
+        <div id="visualizer">
+            <h2>Visualizador</h2>
+            <canvas id="canvas" width="400" height="200"></canvas>
+        </div>
+        <div>
+            <h2>Algoritmos</h2>
+            <label for="algorithmSelect">Seleccione un algoritmo:</label>
+            <select id="algorithmSelect">
+                <option value="linearSearch">Búsqueda Lineal</option>
+                <option value="binarySearch">Búsqueda Binaria</option>
+                <option value="bubbleSort">Bubble Sort</option>
+                <option value="quickSort">QuickSort</option>
+            </select>
+            <button onclick="visualize()">Visualizar</button>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
