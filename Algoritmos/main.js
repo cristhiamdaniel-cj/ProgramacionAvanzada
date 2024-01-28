@@ -26,8 +26,8 @@ function getRandomElement(array) {
 }
 
 // Función para mostrar el estado actual del arreglo en el área designada
-function drawArrayDisplay(array) {
-    const arrayDisplay = document.getElementById("array");
+function drawArrayDisplay(array, containerId) {
+    const arrayDisplay = document.getElementById(containerId);
     arrayDisplay.innerHTML = array.map(value => `<span>${value}</span>`).join(" ");
 }
 
@@ -40,7 +40,7 @@ function sleep(ms) {
 async function linearSearch(array, target) {
     for (let i = 0; i < array.length; ++i) {
         array[i] === target ? array[i] = `(${target})` : array[i] = `${array[i]}`;
-        drawArrayDisplay(array);
+        drawArrayDisplay(array, "modifiedArrayContent");
         await sleep(500);
         if (array[i] === target) {
             return true;
@@ -57,7 +57,7 @@ async function binarySearch(array, target) {
     while (low <= high) {
         const mid = Math.floor((low + high) / 2);
         array[mid] === target ? array[mid] = `(${target})` : array[mid] = `${array[mid]}`;
-        drawArrayDisplay(array);
+        drawArrayDisplay(array, "modifiedArrayContent");
         await sleep(500);
 
         if (array[mid] === target) {
@@ -79,7 +79,7 @@ async function bubbleSort(array) {
     for (let i = 0; i < array.length - 1; ++i) {
         for (let j = 0; j < array.length - i - 1; ++j) {
             array[j] > array[j + 1] ? [array[j], array[j + 1]] = [array[j + 1], array[j]] : null;
-            drawArrayDisplay(array);
+            drawArrayDisplay(array, "modifiedArrayContent");
             await sleep(500);
         }
     }
@@ -101,7 +101,7 @@ async function partition(array, low, high) {
 
     for (let j = low; j <= high - 1; ++j) {
         array[j] > pivot ? [array[j], array[i + 1]] = [array[i + 1], array[j]] : null;
-        drawArrayDisplay(array);
+        drawArrayDisplay(array, "modifiedArrayContent");
         await sleep(500);
 
         if (array[j] < pivot) {
@@ -110,7 +110,7 @@ async function partition(array, low, high) {
     }
 
     [array[i + 1], array[high]] = [array[high], array[i + 1]];
-    drawArrayDisplay(array);
+    drawArrayDisplay(array, "modifiedArrayContent");
     await sleep(500);
 
     return i + 1;
@@ -145,6 +145,9 @@ async function startVisualization() {
     array = resetArray();
     arraySteps.push([...array]);
 
+    // Mostrar arreglo original
+    drawArrayDisplay(array, "array");
+
     switch (selectedAlgorithm) {
         case "linearSearch":
             await linearSearch(array, getRandomElement(array));
@@ -167,7 +170,7 @@ async function startVisualization() {
 function stepBack() {
     if (currentStep > 0) {
         currentStep--;
-        drawArrayDisplay(arraySteps[currentStep]);
+        drawArrayDisplay(arraySteps[currentStep], "modifiedArrayContent");
         updateControls();
     }
 }
@@ -175,13 +178,13 @@ function stepBack() {
 function stepForward() {
     if (currentStep < arraySteps.length - 1) {
         currentStep++;
-        drawArrayDisplay(arraySteps[currentStep]);
+        drawArrayDisplay(arraySteps[currentStep], "modifiedArrayContent");
         updateControls();
     }
 }
 
 function endVisualization() {
     currentStep = arraySteps.length - 1;
-    drawArrayDisplay(arraySteps[currentStep]);
+    drawArrayDisplay(arraySteps[currentStep], "modifiedArrayContent");
     updateControls();
 }
