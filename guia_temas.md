@@ -530,3 +530,199 @@ int main() {
     return 0;
 }
 ```
+## 5. Matrices
+
+### 5.1 Declaración
+
+#### Definición y tipos de matrices
+
+En programación, una matriz es una estructura de datos bidimensional que consta de filas y columnas. Se puede declarar y definir una matriz especificando su tamaño y tipo de elementos. Los tipos comunes incluyen enteros, decimales o caracteres. La declaración de una matriz suele seguir la forma `tipo nombreMatriz[filas][columnas]`.
+
+##### Ejemplo en C++:
+
+```cpp
+#include <iostream>
+
+int main() {
+    // Declaración de una matriz de enteros 3x3
+    int matrizEnteros[3][3];
+
+    // Inicialización de la matriz
+    for (int i = 0; i < 3; ++i) {
+        for (int j = 0; j < 3; ++j) {
+            matrizEnteros[i][j] = i + j;
+        }
+    }
+
+    // Acceso a elementos de la matriz
+    std::cout << "Elemento en la posición (1,2): " << matrizEnteros[1][2] << std::endl;
+
+    return 0;
+}
+```
+
+### 5.2 Almacenamiento y Límites de Matrices
+
+#### Organización de la memoria para matrices
+
+Las matrices se almacenan en memoria de forma contigua, fila por fila. La gestión adecuada de índices y límites es crucial para evitar desbordamientos y acceder a áreas de memoria no asignadas. El acceso a elementos fuera de los límites de la matriz puede provocar comportamientos no deseados y errores en tiempo de ejecución.
+
+##### Ejemplo en C++:
+
+```cpp
+#include <iostream>
+
+int main() {
+    // Declaración e inicialización de una matriz de enteros 2x3
+    int matriz[2][3] = {{1, 2, 3}, {4, 5, 6}};
+
+    // Acceso a elementos de la matriz con índices correctos
+    std::cout << "Elemento en la posición (1,2): " << matriz[1][2] << std::endl;
+
+    // Acceso a elementos fuera de los límites (causará un error)
+    // std::cout << "Elemento fuera de los límites: " << matriz[2][3] << std::endl;
+
+    return 0;
+}
+```
+
+### 5.3 Paso de Matrices a Funciones
+
+#### Manipulación de matrices como argumentos
+
+Cuando se pasa una matriz a una función, se debe especificar el número de columnas, ya que el número de filas se puede inferir a partir de la longitud total del arreglo dividida por el número de columnas. Las funciones pueden realizar diversas operaciones, como búsqueda, manipulación y procesamiento de datos en matrices.
+
+##### Ejemplo en C++:
+
+```cpp
+#include <iostream>
+
+// Función que imprime una matriz
+void imprimirMatriz(int matriz[][3], int filas) {
+    for (int i = 0; i < filas; ++i) {
+        for (int j = 0; j < 3; ++j) {
+            std::cout << matriz[i][j] << " ";
+        }
+        std::cout << std::endl;
+    }
+}
+
+int main() {
+    // Declaración e inicialización de una matriz de enteros 2x3
+    int matriz[2][3] = {{1, 2, 3}, {4, 5, 6}};
+
+    // Llamada a la función que imprime la matriz
+    imprimirMatriz(matriz, 2);
+
+    return 0;
+}
+```
+
+#### Retorno de matrices desde funciones
+
+El retorno de matrices desde funciones puede realizarse creando dinámicamente una matriz en la función y devolviendo un puntero a su dirección de memoria. Es crucial gestionar adecuadamente la liberación de memoria después de utilizar la matriz devuelta.
+
+##### Ejemplo en C++:
+
+```cpp
+#include <iostream>
+
+// Función que crea y retorna una matriz de enteros 2x2
+int** crearMatriz() {
+    int** matriz = new int*[2];
+    for (int i = 0; i < 2; ++i) {
+        matriz[i] = new int[2];
+        for (int j = 0; j < 2; ++j) {
+            matriz[i][j] = i + j;
+        }
+    }
+    return matriz;
+}
+
+int main() {
+    // Llamada a la función que retorna una matriz
+    int** nuevaMatriz = crearMatriz();
+
+    // ... (resto del código)
+
+    // Liberación de memoria
+    for (int i = 0; i < 2; ++i) {
+        delete[] nuevaMatriz[i];
+    }
+    delete[] nuevaMatriz;
+
+    return 0;
+}
+```
+## Arreglos Multidimensionales
+
+Por supuesto, desarrollaremos el punto 6.1 "Paso de Arrays a Funciones" en el contexto de trabajar con arrays multidimensionales y su implementación en algoritmos avanzados. Aquí está la información para cada subpunto:
+
+### 6.1 Paso de Arrays a Funciones
+
+#### Trabajando con Arrays Multidimensionales
+Los arrays multidimensionales son estructuras de datos que almacenan información en una matriz de varias dimensiones. En C++, estos arrays se pueden definir como matrices con filas y columnas o con dimensiones más complejas. Pasar arrays multidimensionales a funciones es una parte esencial de la programación, ya que permite modularizar el código y facilita el procesamiento de datos.
+
+**Ejemplo: Definición de una Matriz 2D y Paso a una Función**
+```cpp
+#include <iostream>
+
+// Función para imprimir una matriz 2D
+void imprimirMatriz(int matriz[][3], int filas, int columnas) {
+    for (int i = 0; i < filas; ++i) {
+        for (int j = 0; j < columnas; ++j) {
+            std::cout << matriz[i][j] << " ";
+        }
+        std::cout << std::endl;
+    }
+}
+
+int main() {
+    const int filas = 3;
+    const int columnas = 3;
+    
+    int miMatriz[filas][columnas] = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+    
+    // Llamar a la función para imprimir la matriz
+    imprimirMatriz(miMatriz, filas, columnas);
+
+    return 0;
+}
+```
+
+#### Implementación y Uso en Algoritmos Avanzados
+Los arrays multidimensionales son fundamentales en algoritmos avanzados, como álgebra lineal, procesamiento de imágenes, simulaciones numéricas y mucho más. Al pasar arrays multidimensionales a funciones, podemos trabajar con grandes conjuntos de datos de manera eficiente y clara.
+
+**Ejemplo: Multiplicación de Matrices**
+```cpp
+#include <iostream>
+
+// Función para multiplicar dos matrices
+void multiplicarMatrices(int A[][3], int B[][3], int C[][3], int filas, int columnas) {
+    for (int i = 0; i < filas; ++i) {
+        for (int j = 0; j < columnas; ++j) {
+            C[i][j] = 0;
+            for (int k = 0; k < columnas; ++k) {
+                C[i][j] += A[i][k] * B[k][j];
+            }
+        }
+    }
+}
+
+int main() {
+    const int filas = 3;
+    const int columnas = 3;
+    
+    int matrizA[filas][columnas] = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+    int matrizB[filas][columnas] = {{9, 8, 7}, {6, 5, 4}, {3, 2, 1}};
+    int resultado[filas][columnas];
+    
+    // Llamar a la función para multiplicar las matrices
+    multiplicarMatrices(matrizA, matrizB, resultado, filas, columnas);
+
+    // Imprimir la matriz resultante
+    imprimirMatriz(resultado, filas, columnas);
+
+    return 0;
+}
+```
