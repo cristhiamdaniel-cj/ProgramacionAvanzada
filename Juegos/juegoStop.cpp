@@ -15,7 +15,15 @@ struct ResultadoRonda {
     int puntos;
 };
 
-Revision
+// Genera una letra aleatoria que no ha sido usada anteriormente
+char generarLetraAleatoria(set<char>& letrasUsadas) {
+    char letra;
+    do {
+        letra = 'A' + rand() % 26;
+    } while (letrasUsadas.find(letra) != letrasUsadas.end());
+    letrasUsadas.insert(letra); // Agrega la letra al conjunto de usadas
+    return letra;
+}
 
 bool iniciaConLetra(const string& palabra, char letra) {
     return !palabra.empty() && toupper(palabra[0]) == toupper(letra);
