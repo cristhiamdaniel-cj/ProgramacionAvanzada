@@ -63,6 +63,16 @@ bool comprobarFinJuego(const vector<vector<bool>>& reveladas) {
     return true;
 }
 
+void elegirCarta(int& x, int& y, const vector<vector<bool>>& reveladas) {
+    do {
+        cout << "Elige una carta (fila y columna): ";
+        cin >> x >> y;
+        if (reveladas[x][y]) {
+            cout << "Esta carta ya ha sido revelada. Elige otra carta.\n";
+        }
+    } while (reveladas[x][y]); // Repetir hasta que se elija una carta no revelada.
+}
+
 int main() {
     int filas = 4, columnas = 4; // Asumimos un tablero de 4x4 para simplificar
     vector<vector<int>> tablero(filas, vector<int>(columnas));
@@ -75,23 +85,19 @@ int main() {
     while (!comprobarFinJuego(reveladas)) {
         mostrarTablero(tablero, reveladas);
 
-        cout << "Elige la primera carta (fila y columna): ";
-        cin >> x1 >> y1;
-        // Mostrar el valor de la primera carta elegida.
-        cout << "Carta elegida: " << tablero[x1][y1] << endl;
-        reveladas[x1][y1] = true; // Temporalmente revelar la primera carta.
-        mostrarTablero(tablero, reveladas); // Mostrar el tablero con la primera carta revelada.
+        elegirCarta(x1, y1, reveladas); // Elegir la primera carta
+        reveladas[x1][y1] = true; // Revelar temporalmente la primera carta
+        mostrarTablero(tablero, reveladas);
 
-        cout << "Elige la segunda carta (fila y columna): ";
-        cin >> x2 >> y2;
+        elegirCarta(x2, y2, reveladas); // Elegir la segunda carta
 
-        if (tablero[x1][y1] == tablero[x2][y2] && (x1 != x2 || y1 != y2)) {
+        if (tablero[x1][y1] == tablero[x2][y2]) {
             cout << "¡Encontraste una pareja!\n";
-            reveladas[x2][y2] = true; // Revelar permanentemente si es una pareja.
+            reveladas[x2][y2] = true; // Revelar permanentemente la segunda carta
         } else {
             cout << "No son una pareja. Intenta de nuevo.\n";
-            reveladas[x1][y1] = false; // Volver a ocultar la primera carta si no es pareja.
-            // No es necesario ocultar la segunda carta ya que no se había revelado permanentemente.
+            reveladas[x1][y1] = false; // Ocultar la primera carta nuevamente
+            // La segunda carta no se revela permanentemente, así que no necesita ser ocultada nuevamente aquí.
         }
     }
 
