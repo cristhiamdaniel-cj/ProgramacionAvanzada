@@ -1,11 +1,17 @@
 {
   "files": {
-    "Archivos/ejemplo01.cpp": [
+    "Semana02/ahorcado_cadenas.py": [
       {
-        "id": "c21f28d0-ae99-4474-af2a-b579f8172bb9",
-        "line": 15,
-        "version": 1,
-        "index": 461
+        "id": "92bb7b82-1402-4021-a883-179e06cffd1d",
+        "line": 1,
+        "version": 1960,
+        "index": 0
+      },
+      {
+        "id": "6a45faba-1eb3-4287-b2dd-6c94e99f78e0",
+        "line": 1,
+        "version": 1960,
+        "index": 0
       }
     ]
   }
